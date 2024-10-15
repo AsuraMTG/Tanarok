@@ -31,6 +31,12 @@ namespace _2024_10_08
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            label1.Text = "";
+            label2.Text = "";
+            label3.Text = "";
+            label4.Text = "";
+
+
             FileStream folyam = new FileStream("adatoktanarok.txt", FileMode.Open);
             StreamReader olvas = new StreamReader(folyam, Encoding.UTF8);
 
@@ -46,7 +52,7 @@ namespace _2024_10_08
                 tanarokFeltoltese.nev = resz[1];
                 tanarokFeltoltese.tantargy = resz[2];
                 tanarokFeltoltese.tanitasKezdete = Convert.ToInt32(resz[3]);
-                tanarokFeltoltese.tanitasKezdete = Convert.ToInt32(resz[4]);
+                tanarokFeltoltese.tanitasVege = Convert.ToInt32(resz[4]);
                 tanarok.Add(tanarokFeltoltese);
             }
 
@@ -68,7 +74,7 @@ namespace _2024_10_08
                 }
             }
 
-            label1.Text = counter.ToString() + "\n";
+            //label1.Text = counter.ToString() + "\n";
 
             // irja ki azoknak a tanaroknak a nevet akik 86 vagy 87 ben leptek be az iskolaba
 
@@ -86,8 +92,34 @@ namespace _2024_10_08
 
             foreach (var item in lek2)
             {
-                label1.Text += "2: " + item.nev + "\n";
+                label2.Text += "2: " + item.nev + "\n";
             }
+
+            // vegytisztan matematika tanar
+
+            var lek3 =
+                from x in tanarok
+                where x.tantargy == "matematika"
+                select new { x.nev };
+
+            foreach (var item in lek3)
+            {
+                label3.Text += "3: " + item.nev + "\n";
+            }
+
+            // mennyi időt tanitott 
+            
+            var lek4 =
+                from x in tanarok
+                where ((x.tanitasVege - x.tanitasKezdete) == tanarok.Max(y => y.tanitasVege - y.tanitasKezdete))
+                select new { x.nev };
+
+            foreach (var item in lek4)
+            {
+                label4.Text += "4: " + item.nev + "\n";
+            }
+
+            // hanyan tanitottak oroszt
         }
     }
 }
