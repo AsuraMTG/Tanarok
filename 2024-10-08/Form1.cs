@@ -35,6 +35,7 @@ namespace _2024_10_08
             label2.Text = "";
             label3.Text = "";
             label4.Text = "";
+            label5.Text = "";
 
 
             FileStream folyam = new FileStream("adatoktanarok.txt", FileMode.Open);
@@ -120,6 +121,19 @@ namespace _2024_10_08
             }
 
             // hanyan tanitottak oroszt
+
+            var lek5 =
+                from x in tanarok
+                where x.tantargy.Contains("orosz")
+                select new { x.nev };
+
+            counter = 0;
+            foreach (var item in lek5)
+            {
+                counter++;
+            }
+
+            label5.Text = $"hány tanár tanit oroszt: {counter}";
         }
     }
 }
